@@ -103,6 +103,31 @@ interface SanitizedParams {
 	query: string;
 }
 
+export interface PokemonStats {
+	'Raw count': number;
+	usage: number;
+	// num GXE, max GXE, 1% GXE, 20% GXE
+	'Viability Ceiling': [number, number, number, number];
+	Abilities: {[ability: string]: number};
+	Items: {[item: string]: number};
+	Spreads: {[spread: string]: number};
+	Happiness?: {[happiness: string]: number};
+	Moves: {[move: string]: number};
+	Teammates: {[pokemon: string]: number};
+	// thanks pre for the reminders of what these do
+	// n = sum(POKE1_KOED...DOUBLE_SWITCH)
+	// p = POKE1_KOED + POKE1_SWITCHED_OUT / n
+	// d = sqrt((p * (1 - p)) / n)
+	'Checks and Counters': { [pokemon: string]: [number, number, number] };
+}
+
+export interface MiscSearch {
+	matches: number;
+	results: {usage: number; pokemon: string}[];
+}
+
+type EndpointResult = PokemonStats | MiscSearch;
+
 export type Endpoint = (
 	this: Dispatch, params: SanitizedParams, req: Request, res: Response
-) => Promise<{[k: string]: any}> | {[k: string]: any};
+) => Promise<EndpointResult> | EndpointResult;

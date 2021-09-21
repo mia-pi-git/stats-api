@@ -5,6 +5,7 @@
 import * as Utils from './test-utils';
 import {resolvePath as resolve} from '../utils';
 import * as fs from 'fs';
+import type {PokemonStats, MiscSearch} from '../dispatch';
 
 describe('API Endpoints', () => {
 	beforeEach(() => {
@@ -21,39 +22,39 @@ describe('API Endpoints', () => {
 		}
 	});
 	test('Pokemon fetching', async () => {
-		const result = await Utils.testQuery({
+		const result: PokemonStats = await Utils.testQuery({
 			type: 'pokemon',
 			query: 'xurkitree',
 			format: 'gen8ou',
 			date: '2021-08',
-		});
+		}) as any;
 		expect(result).toBeDefined();
-		expect(result.error).toBeUndefined();
-		for (const key of ['Checks and Counters', 'Moves', 'Abilities']) {
+		expect((result as any).error).toBeUndefined();
+		for (const key of ['Checks and Counters', 'Moves', 'Abilities'] as const) {
 			expect(result[key]).toBeDefined();
 		}
 	});
 	test('Ability fetching', async () => {
-		const result = await Utils.testQuery({
+		const result: MiscSearch = await Utils.testQuery({
 			type: 'ability',
 			query: 'beastboost',
 			format: 'gen8ou',
 			date: '2021-08',
-		});
+		}) as any;
 		expect(result).toBeDefined();
-		expect(result.error).toBeUndefined();
+		expect((result as any).error).toBeUndefined();
 		expect(result.results).toHaveLength(4);
 		expect(result.results[0].pokemon).toEqual('Xurkitree');
 	});
 	test('Item fetching', async () => {
-		const result = await Utils.testQuery({
+		const result: MiscSearch = await Utils.testQuery({
 			type: 'item',
 			query: 'weaknesspolicy',
 			format: 'gen8ou',
 			date: '2021-08',
-		});
+		}) as any;
 		expect(result).toBeDefined();
-		expect(result.error).toBeUndefined();
+		expect((result as any).error).toBeUndefined();
 		expect(result.results).toHaveLength(8);
 		expect(result.results[0].pokemon).toEqual('Mr. Mime-Galar');
 	});

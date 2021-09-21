@@ -18,17 +18,21 @@ Optionally, `rating` can be set (0, 1500, 1630, 1760) to search in stats for spe
 `Pokemon` - returns:
 ```ts
 {
-    Abilities: {[name: string]: number},
-    'Checks and Counters': {[pokemon: string]: number},
-    Happiness: {[value: number]: number},
-    Items: {[id: string]: number},
-    Moves: {[name: string]: number},
-    'Raw count': number,
-    // includes nature, evs. ex: Timid:0/0/0/252/4/252
-    Spreads: {[spread: string]: number},
-    Teammates: {[mon: string]: number},
-    'Viability Ceiling': [number, number, number, number],
-    usage: number,
+    'Raw count': number;
+    usage: number;
+    // num GXE, max GXE, 1% GXE, 20% GXE
+    'Viability Ceiling': [number, number, number, number];
+    Abilities: {[ability: string]: number};
+    Items: {[item: string]: number};
+    Spreads: {[spread: string]: number};
+    Happiness?: {[happiness: string]: number};
+    Moves: {[move: string]: number};
+    Teammates: {[pokemon: string]: number};
+    // thanks pre for the reminders of what these do
+    // n = sum(POKE1_KOED...DOUBLE_SWITCH)
+    // p = POKE1_KOED + POKE1_SWITCHED_OUT / n
+    // d = sqrt((p * (1 - p)) / n)
+    'Checks and Counters': { [pokemon: string]: [number, number, number] };
 }
 ```
 

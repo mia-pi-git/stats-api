@@ -3,7 +3,7 @@
 * @author mia-pi-git
 */
 
-import {Endpoint, caches} from './dispatch';
+import {Endpoint, caches, PokemonStats, MiscSearch} from './dispatch';
 import {toID, readJSON} from './utils';
 
 export const endpoints: {[k: string]: Endpoint} = {
@@ -19,7 +19,7 @@ export const endpoints: {[k: string]: Endpoint} = {
 			}
 			caches.pokemon.set(key, data);
 		}
-		return data;
+		return data as PokemonStats;
 	},
 	async ability({query, format, date, rating}) {
 		const queryId = toID(query);
@@ -40,7 +40,7 @@ export const endpoints: {[k: string]: Endpoint} = {
 			};
 			caches.abilities.set(key, data);
 		}
-		return data;
+		return data as MiscSearch;
 	},
 	async item({query, format, date, rating}) {
 		const queryId = toID(query);
@@ -61,6 +61,6 @@ export const endpoints: {[k: string]: Endpoint} = {
 			};
 			caches.items.set(key, data);
 		}
-		return data;
+		return data as MiscSearch;
 	},
 };
