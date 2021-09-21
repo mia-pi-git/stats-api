@@ -1,7 +1,7 @@
 /**
- * Handlers for each API endpoint.
- * @author mia-pi-git
- */
+* Handlers for each API endpoint.
+* @author mia-pi-git
+*/
 
 import {Endpoint, caches} from './dispatch';
 import {toID, readJSON} from './utils';

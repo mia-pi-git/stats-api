@@ -15,5 +15,5 @@
 		"allowUnreachableCode": false
 	},
 	"types": ["node"],
-	"include": ["./src/*"]
+	"include": ["./src/*", "./src/test/*"]
 }

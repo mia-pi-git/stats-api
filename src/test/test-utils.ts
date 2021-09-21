@@ -1,7 +1,7 @@
 /**
- * Misc stuff to make tests easier.
- * @author mia-pi-git
- */
+* Misc stuff to make tests easier.
+* @author mia-pi-git
+*/
 
 import * as net from 'net';
 import * as http from 'http';
@@ -25,12 +25,12 @@ export async function testQuery(params: {[k: string]: any}) {
 }
 
 export function makeRequest() {
-    const socket = new net.Socket();
-    const req = new http.IncomingMessage(socket);
-    return {
-        req,
-        res: new http.ServerResponse(req),
-    };
+	const socket = new net.Socket();
+	const req = new http.IncomingMessage(socket);
+	return {
+		req,
+		res: new http.ServerResponse(req),
+	};
 }
 
 export function mkdirIfNotExists(path: string) {

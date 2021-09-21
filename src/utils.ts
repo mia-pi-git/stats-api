@@ -1,7 +1,7 @@
 /**
- * Misc useful stuff.
- * @author mia-pi-git
- */
+* Misc useful stuff.
+* @author mia-pi-git
+*/
 import * as fs from 'fs';
 import * as pathModule from 'path';
 
@@ -31,5 +31,5 @@ export function fileExists(path: string) {
 	});
 }
 export function toID(text: any): string {
-	return (text && typeof text === "string" ? text : "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+	return (text && typeof text === 'string' ? text : '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 }
