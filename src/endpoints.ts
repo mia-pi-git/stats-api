@@ -7,8 +7,7 @@ import {Endpoint, caches} from './dispatch';
 import {toID, readJSON} from './utils';
 
 export const endpoints: {[k: string]: Endpoint} = {
-	async pokemon(body) {
-		const {query, format, date, rating} = body;
+	async pokemon({query, format, date, rating}) {
 		const queryId = toID(query);
 		const key = `pokemon-${queryId}-${format}-${date}-${rating}`;
 		let data = caches.pokemon.get(key);
@@ -22,8 +21,7 @@ export const endpoints: {[k: string]: Endpoint} = {
 		}
 		return data;
 	},
-	async ability(body) {
-		const {query, format, date, rating} = body;
+	async ability({query, format, date, rating}) {
 		const queryId = toID(query);
 		const key = `ability-${queryId}-${format}-${date}-${rating}`;
 		let data = caches.abilities.get(key);
@@ -44,8 +42,7 @@ export const endpoints: {[k: string]: Endpoint} = {
 		}
 		return data;
 	},
-	async item(body) {
-		const {query, format, date, rating} = body;
+	async item({query, format, date, rating}) {
 		const queryId = toID(query);
 		const key = `item-${queryId}-${format}-${date}-${rating}`;
 		let data = caches.items.get(key);
