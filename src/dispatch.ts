@@ -7,12 +7,7 @@ import {URLSearchParams} from 'url';
 import {toID, fileExists} from './utils';
 import {endpoints} from './endpoints';
 
-export const caches: {[k: string]: Map<string, {[k: string]: any}>} = {
-	pokemon: new Map(),
-	abilities: new Map(),
-	items: new Map(),
-};
-/**
+/*
 * The max length a query can be before we reject it.
 * (nothing is really this long? so)
 * */
@@ -126,7 +121,7 @@ export interface MiscSearch {
 	results: {usage: number; pokemon: string}[];
 }
 
-type EndpointResult = PokemonStats | MiscSearch;
+type EndpointResult = PokemonStats | MiscSearch | {error: string};
 
 export type Endpoint = (
 	this: Dispatch, params: SanitizedParams, req: Request, res: Response

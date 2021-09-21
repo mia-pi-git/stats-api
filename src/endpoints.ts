@@ -3,8 +3,14 @@
 * @author mia-pi-git
 */
 
-import {Endpoint, caches, PokemonStats, MiscSearch} from './dispatch';
+import {Endpoint, PokemonStats, MiscSearch} from './dispatch';
 import {toID, readJSON} from './utils';
+
+const caches = {
+    pokemon: new Map<string, PokemonStats | {error: string}>(),
+    abilities: new Map<string, MiscSearch>(),
+    items: new Map<string, MiscSearch>(),
+};
 
 export const endpoints: {[k: string]: Endpoint} = {
 	async pokemon({query, format, date, rating}) {
@@ -19,7 +25,7 @@ export const endpoints: {[k: string]: Endpoint} = {
 			}
 			caches.pokemon.set(key, data);
 		}
-		return data as PokemonStats;
+		return data;
 	},
 	async ability({query, format, date, rating}) {
 		const queryId = toID(query);
