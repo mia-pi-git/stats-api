@@ -11,7 +11,7 @@ import {endpoints} from './endpoints';
 * The max length a query can be before we reject it.
 * (nothing is really this long? so)
 * */
-const MAX_QUERY_LENGTH = 40;
+export const MAX_QUERY_LENGTH = 40;
 
 export class ResponseError extends Error {
 	constructor(message: string) {
@@ -57,8 +57,10 @@ export class Dispatch {
 			throw new ResponseError('Invalid query');
 		}
 		const rating = Number(toID(this.body.get('rating')) || 0);
-		if (![1760, 1630, 1500, 0].includes(rating)) {
-			throw new ResponseError('Invalid rating - must be one of 0, 1500, 1630, or 1760.');
+		if (![1825, 1760, 1630, 1500, 0].includes(rating)) {
+			throw new ResponseError(
+				'Invalid rating - must be one of 0, 1500, 1630, 1760, or 1825.'
+			);
 		}
 		if (!(await fileExists(`/stats/${date}/chaos/${format}-${rating}.json`))) {
 			throw new ResponseError(

@@ -7,9 +7,9 @@ import {Endpoint, PokemonStats, MiscSearch} from './dispatch';
 import {toID, readJSON} from './utils';
 
 const caches = {
-    pokemon: new Map<string, PokemonStats | {error: string}>(),
-    abilities: new Map<string, MiscSearch>(),
-    items: new Map<string, MiscSearch>(),
+	pokemon: new Map<string, PokemonStats | {error: string}>(),
+	abilities: new Map<string, MiscSearch>(),
+	items: new Map<string, MiscSearch>(),
 };
 
 export const endpoints: {[k: string]: Endpoint} = {
@@ -46,7 +46,7 @@ export const endpoints: {[k: string]: Endpoint} = {
 			};
 			caches.abilities.set(key, data);
 		}
-		return data as MiscSearch;
+		return data;
 	},
 	async item({query, format, date, rating}) {
 		const queryId = toID(query);
@@ -67,6 +67,6 @@ export const endpoints: {[k: string]: Endpoint} = {
 			};
 			caches.items.set(key, data);
 		}
-		return data as MiscSearch;
+		return data;
 	},
 };

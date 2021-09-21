@@ -12,10 +12,8 @@ import {Dispatch} from '../dispatch';
 
 export async function testQuery(params: {[k: string]: any}) {
 	const search = new URLSearchParams(params);
-	const {req, res} = makeRequest();
-	req.url = '/?' + search;
 	try {
-		return await new Dispatch(req, res).execute();
+		return await makeDispatch(search).execute();
 	} catch (e: any) {
 		if (e.name?.endsWith('ResponseError')) {
 			return {error: e.message};
@@ -31,6 +29,12 @@ export function makeRequest() {
 		req,
 		res: new http.ServerResponse(req),
 	};
+}
+
+export function makeDispatch(body: {[k: string]: any} = {}) {
+	const {req, res} = makeRequest();
+	req.url = '/?' + new URLSearchParams(body);
+	return new Dispatch(req, res);
 }
 
 export function mkdirIfNotExists(path: string) {

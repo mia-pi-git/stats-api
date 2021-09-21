@@ -58,4 +58,13 @@ describe('API Endpoints', () => {
 		expect(result.results).toHaveLength(8);
 		expect(result.results[0].pokemon).toEqual('Mr. Mime-Galar');
 	});
+	test('Fetching nonexistent Pokemon', async () => {
+		const result = await Utils.testQuery({
+			type: 'pokemon',
+			query: 'nevergonnagiveyouup',
+			format: 'gen8ou',
+			date: '2021-08',
+		});
+		expect((result as any).error).toEqual('No data for that Pokemon was found');
+	});
 });

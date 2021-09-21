@@ -15,9 +15,9 @@ export function readJSON(path: string) {
 	return new Promise<any>((resolve, reject) => {
 		fs.readFile(resolvePath(path), 'utf-8', (err, data) => {
 			if (err) {
-				reject(err);
+				return reject(err);
 			} else {
-				resolve(JSON.parse(data));
+				return resolve(JSON.parse(data));
 			}
 		});
 	});
