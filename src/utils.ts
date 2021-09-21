@@ -17,7 +17,11 @@ export function readJSON(path: string) {
 			if (err) {
 				return reject(err);
 			} else {
-				return resolve(JSON.parse(data));
+				try {
+					return resolve(JSON.parse(data));
+				} catch (e) {
+					return reject(e);
+				}
 			}
 		});
 	});
