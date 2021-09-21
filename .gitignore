@@ -1,0 +1,6 @@
+built
+node_modules
+*.tsbuildinfo
+# directory for files to test on
+stats
+coverage
