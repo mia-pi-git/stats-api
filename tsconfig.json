@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"lib": ["es2020", "dom"],
-		"outDir": "./built",
+		"outDir": "./dist",
 		"declaration": true,
 		"target": "esnext",
 		"module": "commonjs",

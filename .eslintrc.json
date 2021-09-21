@@ -6,7 +6,7 @@
         "globalReturn": true
       }
     },
-    "ignorePatterns": ["node_modules/", "built/"],
+    "ignorePatterns": ["node_modules/", "dist/"],
     "env": {
       "es6": true,
       "node": true

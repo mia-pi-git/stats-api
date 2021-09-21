@@ -2,7 +2,7 @@
   "name": "stats-api",
   "version": "1.0.0",
   "description": "A native stats API for https://smogon.com/stats",
-  "main": "built/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc -p ./",
     "lint": "eslint . --ext ts",
@@ -35,7 +35,7 @@
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/built/",
+      "/dist/",
       "/src/test/test-utils.ts"
     ],
     "transform": {
