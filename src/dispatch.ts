@@ -37,7 +37,7 @@ export class Dispatch {
 	}
 	async execute() {
     	const endpoint = endpoints[
-    		this.body.get('type') || this.body.get('endpoint') || ""
+    		toID(this.body.get('type') || this.body.get('endpoint') || "")
     	];
     	if (!endpoint) {
     		throw new ResponseError('Endpoint not found');
