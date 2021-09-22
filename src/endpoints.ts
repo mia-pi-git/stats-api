@@ -3,70 +3,31 @@
 * @author mia-pi-git
 */
 
-import {Endpoint, PokemonStats, MiscSearch} from './dispatch';
+import {Endpoint} from './dispatch';
 import {toID, readJSON} from './utils';
-
-const caches = {
-	pokemon: new Map<string, PokemonStats | {error: string}>(),
-	abilities: new Map<string, MiscSearch>(),
-	items: new Map<string, MiscSearch>(),
-};
 
 export const endpoints: {[k: string]: Endpoint} = {
 	async pokemon({query, format, date, rating}) {
 		const queryId = toID(query);
-		const key = `pokemon-${queryId}-${format}-${date}-${rating}`;
-		let data = caches.pokemon.get(key);
+		const key = `${queryId}-${format}-${date}-${rating}`;
+		let data = this.caches.pokemon.get(key);
 		if (!data) {
 			const stats = await readJSON(`stats/${date}/chaos/${format}-${rating}.json`);
 			data = stats.data[queryId.charAt(0).toUpperCase() + queryId.slice(1)];
 			if (!data) {
 				data = {error: 'No data for that Pokemon was found'};
 			}
-			caches.pokemon.set(key, data);
+			this.caches.pokemon.set(key, data);
 		}
 		return data;
 	},
-	async ability({query, format, date, rating}) {
-		const queryId = toID(query);
-		const key = `ability-${queryId}-${format}-${date}-${rating}`;
-		let data = caches.abilities.get(key);
-		if (!data) {
-			const stats = await readJSON(`stats/${date}/chaos/${format}-${rating}.json`);
-			const results = [];
-			for (const k in stats.data) {
-				const pokemon = stats.data[k];
-				if (typeof pokemon.Abilities[queryId] !== 'undefined') {
-					results.push({pokemon: k, usage: pokemon.Abilities[queryId]});
-				}
-			}
-			data = {
-				results,
-				matches: results.length,
-			};
-			caches.abilities.set(key, data);
-		}
-		return data;
+	ability(params) {
+		return this.searchKey('Abilities', params);
 	},
-	async item({query, format, date, rating}) {
-		const queryId = toID(query);
-		const key = `item-${queryId}-${format}-${date}-${rating}`;
-		let data = caches.items.get(key);
-		if (!data) {
-			const stats = await readJSON(`stats/${date}/chaos/${format}-${rating}.json`);
-			const results = [];
-			for (const k in stats.data) {
-				const pokemon = stats.data[k];
-				if (typeof pokemon.Items[queryId] !== 'undefined') {
-					results.push({pokemon: k, usage: pokemon.Items[queryId]});
-				}
-			}
-			data = {
-				results,
-				matches: results.length,
-			};
-			caches.items.set(key, data);
-		}
-		return data;
+	item(params) {
+		return this.searchKey('Items', params);
+	},
+	move(params) {
+		return this.searchKey('Moves', params);
 	},
 };

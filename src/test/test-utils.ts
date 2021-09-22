@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import {resolvePath} from '../utils';
 import {URLSearchParams} from 'url';
 import {Dispatch} from '../dispatch';
+import {APIContext} from '../api';
 
 export async function testQuery(params: {[k: string]: any}) {
 	const search = new URLSearchParams(params);
@@ -35,6 +36,10 @@ export function makeDispatch(body: {[k: string]: any} = {}) {
 	const {req, res} = makeRequest();
 	req.url = '/?' + new URLSearchParams(body);
 	return new Dispatch(req, res);
+}
+
+export function makeAPI(body: {[k: string]: any} = {}) {
+	return new APIContext(makeDispatch(body));
 }
 
 export function mkdirIfNotExists(path: string) {

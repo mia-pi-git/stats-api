@@ -2,6 +2,7 @@ import {Dispatch, ResponseError, MAX_QUERY_LENGTH, handle} from '../dispatch';
 import {makeRequest, makeDispatch} from './test-utils';
 import {URLSearchParams as URLParams} from 'url';
 
+// todo test the custom validation functions
 describe('Dispatch', () => {
 	test('ResponseError handling', async () => {
 		const body = new URLParams({

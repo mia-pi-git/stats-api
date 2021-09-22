@@ -67,4 +67,15 @@ describe('API Endpoints', () => {
 		});
 		expect((result as any).error).toEqual('No data for that Pokemon was found');
 	});
+	test('Fetching moves', async () => {
+		const result: MiscSearch = await Utils.testQuery({
+			type: 'move',
+			query: 'gigadrain',
+			format: 'gen8ou',
+			date: '2021-08',
+		}) as any;
+		expect(result).toBeDefined();
+		expect((result as any).error).toBeUndefined();
+		expect(result.results[0].pokemon).toEqual('Volcarona');
+	});
 });

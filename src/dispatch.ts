@@ -5,6 +5,7 @@
 import {IncomingMessage as Request, ServerResponse as Response} from 'http';
 import {URLSearchParams} from 'url';
 import {toID, fileExists} from './utils';
+import {APIContext} from './api';
 import {endpoints} from './endpoints';
 
 /*
@@ -37,8 +38,13 @@ export class Dispatch {
 		if (!endpoint) {
 			throw new ResponseError('Endpoint not found');
 		}
+		const context = new APIContext(this);
+		if ('validate' in endpoint) {
+			const params = await endpoint.validate.call(this, this.body);
+			return endpoint.fetch.call(context, params, this.req, this.res);
+		}
 		const params = await this.validateParams();
-		return endpoint.call(this, params, this.req, this.res);
+		return endpoint.call(context, params, this.req, this.res);
 	}
 	async validateParams(): Promise<SanitizedParams> {
 		const date = this.body.get('date');
@@ -93,7 +99,7 @@ export async function handle(req: Request, res: Response) {
 	}
 }
 
-interface SanitizedParams {
+export interface SanitizedParams {
 	rating: number;
 	date: string;
 	format: string;
@@ -125,6 +131,18 @@ export interface MiscSearch {
 
 type EndpointResult = PokemonStats | MiscSearch | {error: string};
 
-export type Endpoint = (
-	this: Dispatch, params: SanitizedParams, req: Request, res: Response
+export type EndpointHandler<ParamsType = SanitizedParams> = (
+	this: APIContext, params: ParamsType, req: Request, res: Response
 ) => Promise<EndpointResult> | EndpointResult;
+
+export interface EndpointCustomHandler {
+	/**
+     * Return custom parameters for the fetcher function to handle.
+     */
+	validate: (this: Dispatch, body: URLSearchParams) => (
+		{[k: string]: any} | Promise<{[k: string]: any}>
+	);
+	fetch: EndpointHandler<{[k: string]: any}>;
+}
+
+export type Endpoint = EndpointHandler | EndpointCustomHandler;
